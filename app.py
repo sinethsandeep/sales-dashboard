@@ -128,12 +128,30 @@ fig_city_sales.update_layout(
     yaxis=(dict(showgrid=False)),
 )
 
+# GROSS INCOME BY PRODUCT LINE [LINE CHART]
+gross_income_by_product_line = df_selection.groupby(by=["Product line"])[["gross income"]].sum().sort_values(by="gross income")
+fig_gross_income = px.line(
+    gross_income_by_product_line,
+    x=gross_income_by_product_line.index,
+    y="gross income",
+    title="<b>Gross Income by Product Line</b>",
+    markers=True,
+    color_discrete_sequence=["#0083B8"] * len(gross_income_by_product_line),
+    template="plotly_white",
+)
+fig_gross_income.update_layout(
+    plot_bgcolor="rgba(0,0,0,0)",
+    xaxis=dict(showgrid=False),
+    yaxis=dict(showgrid=False),
+)
+
 left_column, right_column = st.columns(2)
 left_column.plotly_chart(fig_hourly_sales, use_container_width=True)
 right_column.plotly_chart(fig_product_sales, use_container_width=True)
 
-# Adding the new bar graph
-st.plotly_chart(fig_city_sales, use_container_width=True)
+left_column, right_column = st.columns(2)
+left_column.plotly_chart(fig_city_sales, use_container_width=True)
+right_column.plotly_chart(fig_gross_income, use_container_width=True)
 
 # ---- HIDE STREAMLIT STYLE ----
 hide_st_style = """
