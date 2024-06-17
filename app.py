@@ -46,7 +46,7 @@ customer_type = st.sidebar.multiselect(
 gender = st.sidebar.multiselect(
     "Select the Gender:",
     options=df["Gender"].unique(),
-    default=df["Gender"].unique()
+    default[df["Gender"].unique()
 )
 
 df_selection = df.query(
@@ -56,7 +56,7 @@ df_selection = df.query(
 # Check if the dataframe is empty:
 if df_selection.empty:
     st.warning("No data available based on the current filter settings!")
-    st.stop() # This will halt the app from further execution.
+    st.stop()  # This will halt the app from further execution.
 
 # ---- MAINPAGE ----
 st.title(":bar_chart: Sales Dashboard")
@@ -171,16 +171,10 @@ st.plotly_chart(fig_payment_sales, use_container_width=True)
 
 # ---- HIDE STREAMLIT STYLE ----
 hide_st_style = """
-            <style>
-            #MainMenu {visibility: hidden;}
-            footer {visibility: hidden;}
-            header {visibility: hidden;}
-            </style>
-            """
-st.markdown(hide_st_style, unsafe_allow_html=True)
-
-            footer {visibility: hidden;}
-            header {visibility: hidden;}
-            </style>
-            """
+<style>
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+header {visibility: hidden;}
+</style>
+"""
 st.markdown(hide_st_style, unsafe_allow_html=True)
