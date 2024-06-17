@@ -33,8 +33,8 @@ df = get_data_from_excel()
 st.sidebar.header("Please Filter Here:")
 city = st.sidebar.multiselect(
     "Select the City:",
-    options=df["city"].unique(),
-    default=df["city"].unique()
+    options=df["City"].unique(),
+    default=df["City"].unique()
 )
 
 customer_type = st.sidebar.multiselect(
@@ -50,7 +50,7 @@ gender = st.sidebar.multiselect(
 )
 
 df_selection = df.query(
-    "city == @city & Customer_type == @customer_type & Gender == @gender"
+    "City == @city & Customer_type == @customer_type & Gender == @gender"
 )
 
 # Check if the dataframe is empty:
@@ -114,7 +114,7 @@ fig_hourly_sales.update_layout(
 )
 
 # SALES BY CITY [BAR CHART]
-sales_by_city = df_selection.groupby(by=["city"])[["Total"]].sum().sort_values(by="Total")
+sales_by_city = df_selection.groupby(by=["City"])[["Total"]].sum().sort_values(by="Total")
 fig_city_sales = px.bar(
     sales_by_city,
     x=sales_by_city.index,
@@ -178,3 +178,4 @@ header {visibility: hidden;}
 </style>
 """
 st.markdown(hide_st_style, unsafe_allow_html=True)
+
