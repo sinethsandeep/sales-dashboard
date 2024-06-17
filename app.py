@@ -46,7 +46,7 @@ customer_type = st.sidebar.multiselect(
 gender = st.sidebar.multiselect(
     "Select the Gender:",
     options=df["Gender"].unique(),
-    default[df["Gender"].unique()
+    default=df["Gender"].unique()
 )
 
 df_selection = df.query(
