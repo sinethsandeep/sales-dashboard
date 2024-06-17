@@ -40,7 +40,7 @@ city = st.sidebar.multiselect(
 customer_type = st.sidebar.multiselect(
     "Select the Customer Type:",
     options=df["Customer_type"].unique(),
-    default=df["Customer_type"].unique(),
+    default=df["Customer_type"].unique()
 )
 
 gender = st.sidebar.multiselect(
@@ -113,11 +113,27 @@ fig_hourly_sales.update_layout(
     yaxis=(dict(showgrid=False)),
 )
 
+# SALES BY CITY [BAR CHART]
+sales_by_city = df_selection.groupby(by=["City"])[["Total"]].sum().sort_values(by="Total")
+fig_city_sales = px.bar(
+    sales_by_city,
+    x=sales_by_city.index,
+    y="Total",
+    title="<b>Sales by City</b>",
+    color_discrete_sequence=["#0083B8"] * len(sales_by_city),
+    template="plotly_white",
+)
+fig_city_sales.update_layout(
+    plot_bgcolor="rgba(0,0,0,0)",
+    yaxis=(dict(showgrid=False)),
+)
 
 left_column, right_column = st.columns(2)
 left_column.plotly_chart(fig_hourly_sales, use_container_width=True)
 right_column.plotly_chart(fig_product_sales, use_container_width=True)
 
+# Adding the new bar graph
+st.plotly_chart(fig_city_sales, use_container_width=True)
 
 # ---- HIDE STREAMLIT STYLE ----
 hide_st_style = """
