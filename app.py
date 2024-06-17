@@ -114,8 +114,8 @@ fig_hourly_sales.update_layout(
 )
 
 # SALES BY CITY [BAR CHART]
-sales_by_hour = df_selection.groupby(by=["city"])[["Total"]].sum()
-fig_hourly_sales = px.bar(
+sales_by_city = df_selection.groupby(by=["city"])[["Total"]].sum()
+fig_city_sales = px.bar(
     sales_by_city,
     x=sales_by_city.index,
     y="Total",
@@ -123,7 +123,7 @@ fig_hourly_sales = px.bar(
     color_discrete_sequence=["#0083B8"] * len(sales_by_city),
     template="plotly_white",
 )
-fig_hourly_sales.update_layout(
+fig_city_sales.update_layout(
     xaxis=dict(tickmode="linear"),
     plot_bgcolor="rgba(0,0,0,0)",
     yaxis=(dict(showgrid=False)),
