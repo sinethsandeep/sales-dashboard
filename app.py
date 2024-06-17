@@ -33,8 +33,8 @@ df = get_data_from_excel()
 st.sidebar.header("Please Filter Here:")
 city = st.sidebar.multiselect(
     "Select the City:",
-    options=df["City"].unique(),
-    default=df["City"].unique()
+    options=df["city"].unique(),
+    default=df["city"].unique()
 )
 
 customer_type = st.sidebar.multiselect(
@@ -50,7 +50,7 @@ gender = st.sidebar.multiselect(
 )
 
 df_selection = df.query(
-    "City == @city & Customer_type ==@customer_type & Gender == @gender"
+    "city == @city & Customer_type == @customer_type & Gender == @gender"
 )
 
 # Check if the dataframe is empty:
@@ -114,7 +114,7 @@ fig_hourly_sales.update_layout(
 )
 
 # SALES BY CITY [BAR CHART]
-sales_by_city = df_selection.groupby(by=["City"])[["Total"]].sum().sort_values(by="Total")
+sales_by_city = df_selection.groupby(by=["city"])[["Total"]].sum().sort_values(by="Total")
 fig_city_sales = px.bar(
     sales_by_city,
     x=sales_by_city.index,
@@ -145,7 +145,17 @@ fig_gross_income.update_layout(
     yaxis=dict(showgrid=False),
 )
 
-# Layout for displaying the charts
+# SALES BY PAYMENT METHOD [PIE CHART]
+sales_by_payment = df_selection.groupby(by=["Payment"])[["Total"]].sum()
+fig_payment_sales = px.pie(
+    sales_by_payment,
+    values="Total",
+    names=sales_by_payment.index,
+    title="<b>Sales by Payment Method</b>",
+    color_discrete_sequence=px.colors.sequential.RdBu,
+    template="plotly_white",
+)
+
 left_column, right_column = st.columns(2)
 left_column.plotly_chart(fig_hourly_sales, use_container_width=True)
 right_column.plotly_chart(fig_product_sales, use_container_width=True)
@@ -156,10 +166,19 @@ st.plotly_chart(fig_city_sales, use_container_width=True)
 # Add gross income by product line chart below the sales by city chart
 st.plotly_chart(fig_gross_income, use_container_width=True)
 
+# Add sales by payment method pie chart
+st.plotly_chart(fig_payment_sales, use_container_width=True)
+
 # ---- HIDE STREAMLIT STYLE ----
 hide_st_style = """
             <style>
             #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            header {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_st_style, unsafe_allow_html=True)
+
             footer {visibility: hidden;}
             header {visibility: hidden;}
             </style>
