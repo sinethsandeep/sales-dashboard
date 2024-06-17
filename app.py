@@ -145,13 +145,16 @@ fig_gross_income.update_layout(
     yaxis=dict(showgrid=False),
 )
 
+# Layout for displaying the charts
 left_column, right_column = st.columns(2)
 left_column.plotly_chart(fig_hourly_sales, use_container_width=True)
 right_column.plotly_chart(fig_product_sales, use_container_width=True)
 
-left_column, right_column = st.columns(2)
-left_column.plotly_chart(fig_city_sales, use_container_width=True)
-right_column.plotly_chart(fig_gross_income, use_container_width=True)
+# Add sales by city chart
+st.plotly_chart(fig_city_sales, use_container_width=True)
+
+# Add gross income by product line chart below the sales by city chart
+st.plotly_chart(fig_gross_income, use_container_width=True)
 
 # ---- HIDE STREAMLIT STYLE ----
 hide_st_style = """
